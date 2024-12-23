@@ -2,9 +2,7 @@ import axiosInstance from '@/axiosConfig'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 
-type Props = {}
-
-export default function Dashboard({}: Props) {
+export default function Dashboard() {
   const handledemoSecure = async () => {
     try {
       const response = await axiosInstance.get('/demo')

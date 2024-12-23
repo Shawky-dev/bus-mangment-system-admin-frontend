@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
+import axiosInstance from '@/axiosConfig'
 
 export default function LandingPage() {
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axiosInstance.get('/api/v1/auth/check')
+        const { role } = response.data
+        if (role === 'ADMIN') {
+          navigate('/dashboard')
+        } else {
+          console.log('User is not an admin')
+        }
+      } catch (error) {
+        console.log('User is not authenticated\n' + error)
+      }
+    }
+    checkAuth()
+  }, [navigate])
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">

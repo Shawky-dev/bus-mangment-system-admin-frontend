@@ -29,7 +29,7 @@ export default function MainArea({}: Props) {
           className={`text-lg ${selected === 2 ? 'underline' : ''}`}
           onClick={() => setSelected(2)}
         >
-          Area
+          Students
         </Button>
       </div>
       {selected === 0 && (

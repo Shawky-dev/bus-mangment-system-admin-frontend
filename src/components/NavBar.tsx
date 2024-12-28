@@ -28,11 +28,12 @@ export default function NavBar({}: Props) {
   }
 
   return (
-    <div className="h-14 flex flex-row justify-between p-2 items-center bg-[#DDE6ED] shadow-[rgba(0,0,15,0.1)_5px_5px_4px_0px] border-b-[1px] border-gray-300">
+    <div className="h-14 flex flex-row justify-between p-2 items-center bg-gray-100 shadow-[rgba(0,0,15,0.1)_10px_0px_5px_0px] border-b-[1px] border-gray-200">
       <div>center</div>
       <div>right</div>
       <div className="flex flex-row items-center space-x-4">
         {/* <div className="border-r-2 border-gray-300">&nbsp;</div> */}
+        <h1>username</h1>
         <DropdownMenu>
           <DropdownMenuTrigger className="flex flex-row space-x-1 items-center outline-none focus:outline-none">
             <Avatar className="drop-shadow-sm">
@@ -40,7 +41,7 @@ export default function NavBar({}: Props) {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="">
+          <DropdownMenuContent className="bg-gray-100">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>

@@ -44,10 +44,10 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-row justify-between h-svh">
-      <div className="bg-[#DDE6ED] w-1/12 p-3 flex flex-col border-gray-300 border-[1px]">
+      <div className="bg-gray-100 w-2/12 p-3 flex flex-col border-gray-200 border-r-[1px]">
         <div className="flex items-center space-x-2"></div>
       </div>
-      <div className="bg-[#9DB2BF] grow overflow-hidden">
+      <div className="bg-gray-300 grow overflow-hidden">
         {/*  */}
         <NavBar />
         <MainArea />

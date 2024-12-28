@@ -9,8 +9,8 @@ export default function MainArea({}: Props) {
   const [selected, setSelected] = useState(0)
 
   return (
-    <div className="p-3">
-      <div className="flex flex-row">
+    <div className="overflow-scroll h-full ">
+      <div className="flex flex-row sticky top-0 bg-gray-300 z-10 p-3">
         <Button
           variant="link"
           className={`text-lg ${selected === 0 ? 'underline' : ''}`}
@@ -33,7 +33,7 @@ export default function MainArea({}: Props) {
           Students
         </Button>
       </div>
-      <div className="h-screen overflow-scroll">
+      <div className="mb-10">
         {selected === 0 && (
           <div className="p-5">
             <AreasSection />

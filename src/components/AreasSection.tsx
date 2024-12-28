@@ -16,12 +16,15 @@ import {
   CardHeader,
   CardTitle,
 } from './ui/card'
-
+import { MdOutlineEdit } from 'react-icons/md'
+import { RiBusFill } from 'react-icons/ri'
+import { IoMdPerson } from 'react-icons/io'
+import { ImLocation } from 'react-icons/im'
 type Props = {}
 
 export default function AreasSection({}: Props) {
   return (
-    <div className="flex flex-col p-4">
+    <div className="flex flex-col p-4 overflow-y-scroll">
       <div className="flex flex-row justify-between space-x-2">
         <Card className="p-2 grow">
           <Table>
@@ -61,13 +64,68 @@ export default function AreasSection({}: Props) {
           </Table>
         </Card>
         <Card className="w-2/6">
-          <CardHeader>
+          <CardHeader className="pb-2">
             <CardTitle className=" text-center">Area</CardTitle>
             <img src="https://placehold.co/200x100/png" />
-            <CardDescription></CardDescription>
           </CardHeader>
+          <CardDescription className="flex flex-row-reverse pl-6 pr-6 justify-between items-center">
+            <MdOutlineEdit className="text-[30px] hover:cursor-pointer hover:bg-gray-100 rounded-lg" />
+            <div className="flex flex-row">
+              <RiBusFill className="text-[20px]" />
+              <p>: 0</p>
+            </div>
+            <div className="flex flex-row">
+              <IoMdPerson className="text-[20px]" />
+              <p>: 0</p>
+            </div>
+            <div className="flex flex-row">
+              <ImLocation className="text-[20px]" />
+              <p>: 0</p>
+            </div>
+          </CardDescription>
           <CardContent>
+            <p>Stop Locations</p>
+            <div className="overflow-y-scroll h-30">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Stop Name</TableHead>
+                    <TableHead>Location</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">Stop 1</TableCell>
+                    <TableCell>Tagamo3</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-medium">Stop 1</TableCell>
+                    <TableCell>Tagamo3</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
             <p>Student List</p>
+            <div className="overflow-y-scroll h-30">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Student Name</TableHead>
+                    <TableHead>DropOff</TableHead>
+                    <TableHead>Method</TableHead>
+                    <TableHead className="text-right">Amount</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-medium">INV001</TableCell>
+                    <TableCell>Paid</TableCell>
+                    <TableCell>Credit Card</TableCell>
+                    <TableCell className="text-right">$250.00</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
           <CardFooter>
             <p>Card Footer</p>

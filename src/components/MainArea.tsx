@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Button } from './ui/button'
-import AreasSection from './AreasSection'
+import AreasSection from './Mangment/Areas/AreasSection'
 import { Card } from './ui/card'
+import StudentSection from './Mangment/Students/StudentSection'
 
 type Props = {}
 
@@ -23,14 +24,14 @@ export default function MainArea({}: Props) {
           className={`text-lg ${selected === 1 ? 'underline' : ''}`}
           onClick={() => setSelected(1)}
         >
-          Buses
+          Buses/Drivers
         </Button>
         <Button
           variant="link"
           className={`text-lg ${selected === 2 ? 'underline' : ''}`}
           onClick={() => setSelected(2)}
         >
-          Students
+          Students/Parents
         </Button>
       </div>
       <div className="mb-10">
@@ -40,7 +41,11 @@ export default function MainArea({}: Props) {
           </div>
         )}
         {selected === 1 && <div>Content for Buses</div>}
-        {selected === 2 && <div>Content for Area</div>}
+        {selected === 2 && (
+          <div className="p-5">
+            <StudentSection />
+          </div>
+        )}
       </div>
     </div>
   )

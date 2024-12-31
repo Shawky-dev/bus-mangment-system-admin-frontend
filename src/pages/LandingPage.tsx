@@ -9,7 +9,7 @@ export default function LandingPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axiosInstance.get('/api/v1/auth/check')
+        const response = await axiosInstance.get('/auth/check')
         const { role } = response.data
         if (role === 'ADMIN') {
           navigate('/dashboard')

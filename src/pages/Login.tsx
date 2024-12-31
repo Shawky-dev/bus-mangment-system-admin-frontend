@@ -11,13 +11,10 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      const response = await axiosInstance.post(
-        '/api/v1/auth/authenticateAdmin',
-        {
-          email,
-          password,
-        }
-      )
+      const response = await axiosInstance.post('/auth/authenticateAdmin', {
+        email,
+        password,
+      })
       console.log('Login successful', response.data)
       // Navigate to another page on successful login
       navigate('/dashboard')

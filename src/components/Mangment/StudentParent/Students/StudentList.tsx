@@ -12,12 +12,15 @@ import {
 } from '@/components/ui/table'
 import React from 'react'
 import { IoAddCircleOutline } from 'react-icons/io5'
-import AreaEdit from '../Areas/AreaEdit'
-import AreaListRow from '../Areas/AreaListRow'
+import AreaEdit from '../../Areas/AreaEdit'
+import { Student } from 'public/types'
+import StudentListRow from './StudentListRow'
 
-type Props = {}
+type Props = {
+  students: Array<Student>
+}
 
-export default function StudentList({}: Props) {
+export default function StudentList({ students }: Props) {
   return (
     <Card className="p-2 grow">
       <Table>
@@ -26,7 +29,7 @@ export default function StudentList({}: Props) {
             <DialogTrigger>
               <Button>
                 <IoAddCircleOutline />
-                Add Area
+                Add Student
               </Button>
             </DialogTrigger>
             <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
@@ -38,13 +41,17 @@ export default function StudentList({}: Props) {
           <TableRow>
             <TableHead className="w-[100px]">Student Pic</TableHead>
             <TableHead>Student Name</TableHead>
-            <TableHead>Area</TableHead>
+            <TableHead>Student Email</TableHead>
             <TableHead>Parent</TableHead>
-            <TableHead>DropOffPickUp</TableHead>
-            <TableHead className="text-right">No. of Spots</TableHead>
+            <TableHead>Area</TableHead>
+            <TableHead className="text-right">Stop</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody></TableBody>
+        <TableBody>
+          {students.map((student) => (
+            <StudentListRow student={student} />
+          ))}
+        </TableBody>
       </Table>
     </Card>
   )

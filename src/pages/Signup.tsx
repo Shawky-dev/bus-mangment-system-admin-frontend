@@ -16,7 +16,7 @@ export default function Signup() {
       return
     }
     try {
-      const response = await axiosInstance.post('/api/v1/auth/registerAdmin', {
+      const response = await axiosInstance.post('/auth/registerAdmin', {
         name,
         email,
         password,

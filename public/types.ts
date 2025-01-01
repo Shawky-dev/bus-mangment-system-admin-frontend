@@ -8,16 +8,16 @@ export type Student = {
   id: number
   name: string
   email: string
-  password: string
   role: string
-  parent: string
-  location: string
-  enabled: boolean
-  accountNonLocked: boolean
-  credentialsNonExpired: boolean
-  accountNonExpired: boolean
-  authorities: Array<Authority>
-  username: string
+  parentId: number
+  areaId: number
+}
+export type Parent = {
+  id: number
+  name: string
+  email: string
+  role: string
+  studentId: number
 }
 export type Authority = {
   authority: string

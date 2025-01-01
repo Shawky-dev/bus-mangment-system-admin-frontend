@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button } from './ui/button'
 import AreasSection from './Mangment/Areas/AreasSection'
 import { Card } from './ui/card'
-import StudentSection from './Mangment/Students/StudentSection'
+import StudentSection from './Mangment/StudentParent/StudentParentSection'
 
 type Props = {}
 

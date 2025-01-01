@@ -20,7 +20,7 @@ export default function NavBar({}: Props) {
 
   const handleLogout = async () => {
     try {
-      await axiosInstance.get('/api/v1/auth/logout')
+      await axiosInstance.get('/auth/logout')
       navigate('/')
     } catch (error) {
       console.log('User is not authenticated\n' + error)

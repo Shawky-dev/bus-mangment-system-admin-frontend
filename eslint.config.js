@@ -18,11 +18,22 @@ export default tseslint.config(
       'react-refresh': reactRefresh,
     },
     rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
       ],
+      // ...existing rules...
+      '@typescript-eslint/ban-types': [
+        'error',
+        {
+          types: {
+            '{}': false,
+          },
+          extendDefaults: true,
+        },
+      ],
     },
-  },
+  }
 )

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import StudentList from './Students/StudentList'
 import StudentDisplay from './Students/StudentDisplay'
 import axiosInstance from '@/axiosConfig'
 import { Parent, Student } from 'public/types'
 import ParentDisplay from './Parent/ParentDisplay'
-import ParentList from './Parent/ParentList'
+import StudentTable from './Students/StudentTable'
 
 type Props = {}
 
@@ -42,12 +41,12 @@ export default function StudentSection({}: Props) {
   return (
     <div className="flex flex-col p-4 overflow-y-scroll space-y-5">
       <div className="flex flex-row justify-between space-x-2">
-        <StudentList students={students} />
+        <StudentTable />
         <StudentDisplay />
       </div>
       <div className="flex flex-row justify-between space-x-2">
-        <ParentList parents={parents} />
-        <ParentDisplay />
+        {/* <ParentList parents={parents} />
+        <ParentDisplay /> */}
       </div>
     </div>
   )

@@ -28,14 +28,29 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import AreaEdit from './AreaEdit'
+import { Area } from 'public/types'
+import { get } from 'http'
 
-type Props = {}
+type Props = {
+  selectedArea: Area | null
+}
+export const getValueOrDefault = (
+  value,
+  defaultValue = <p className="italic text-gray-400 ">No Value</p>
+) => (value ? value : defaultValue)
 
-export default function AreaDisplay({}: Props) {
+export default function AreaDisplay({ selectedArea }: Props) {
+  if (!selectedArea) {
+    return (
+      <Card className="w-3/6 flex justify-center items-center">
+        <p className="">No area selected</p>
+      </Card>
+    )
+  }
   return (
-    <Card className="w-2/6">
+    <Card className="w-3/6">
       <CardHeader className="pb-2">
-        <CardTitle className=" text-center">Area</CardTitle>
+        <CardTitle className=" text-center">{selectedArea.name}</CardTitle>
         <img src="https://placehold.co/200x100/png" />
       </CardHeader>
       <CardDescription className="flex flex-row-reverse pl-6 pr-6 justify-between items-center">
@@ -44,7 +59,7 @@ export default function AreaDisplay({}: Props) {
             <MdOutlineEdit className="text-[30px] hover:cursor-pointer hover:bg-gray-100 rounded-lg" />
           </DialogTrigger>
           <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
-            <AreaEdit />
+            <AreaEdit area={selectedArea} />
           </DialogContent>
         </Dialog>
 
@@ -67,19 +82,23 @@ export default function AreaDisplay({}: Props) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Stop Name</TableHead>
-                <TableHead>Location</TableHead>
+                <TableHead className="w-[100px]">id</TableHead>
+                <TableHead>Stop Name</TableHead>
+                <TableHead className="text-right">Priority</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Stop 1</TableCell>
-                <TableCell>Tagamo3</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell className="font-medium">Stop 1</TableCell>
-                <TableCell>Tagamo3</TableCell>
-              </TableRow>
+              {selectedArea.stops.map((stop) => (
+                <TableRow>
+                  <TableCell className="font-medium">
+                    {getValueOrDefault(stop.id)}
+                  </TableCell>
+                  <TableCell>{getValueOrDefault(stop.name)}</TableCell>
+                  <TableCell className="text-right">
+                    {getValueOrDefault(stop.priority)}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -88,19 +107,27 @@ export default function AreaDisplay({}: Props) {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[100px]">Student Name</TableHead>
-                <TableHead>DropOff</TableHead>
-                <TableHead>Method</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
+                <TableHead className="w-[100px]">Student id</TableHead>
+                <TableHead>Student Email</TableHead>
+                <TableHead>Student Name</TableHead>
+                <TableHead>Student ParentId</TableHead>
+                <TableHead className="text-right">Stop Id</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">INV001</TableCell>
-                <TableCell>Paid</TableCell>
-                <TableCell>Credit Card</TableCell>
-                <TableCell className="text-right">$250.00</TableCell>
-              </TableRow>
+              {selectedArea.students.map((student) => (
+                <TableRow>
+                  <TableCell className="font-medium">
+                    {getValueOrDefault(student.id)}
+                  </TableCell>
+                  <TableCell>{getValueOrDefault(student.email)}</TableCell>
+                  <TableCell>{getValueOrDefault(student.name)}</TableCell>
+                  <TableCell>{getValueOrDefault(student.parentId)}</TableCell>
+                  <TableCell className="text-right">
+                    {getValueOrDefault(student.stopId)}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>

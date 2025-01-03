@@ -4,19 +4,20 @@ import { Area } from 'public/types'
 
 type Props = {
   area: Area
+  handleAreaClick: (id: number) => void
 }
 
-export default function AreaListRow({ area }: Props) {
+export default function AreaListRow({ area, handleAreaClick }: Props) {
   return (
-    <TableRow>
-      <TableCell className="font-medium justify-center">
-        <img src="https://placehold.co/50x50/png" />
-      </TableCell>
+    <TableRow
+      onClick={() => handleAreaClick(area.id)}
+      className="cursor-pointer"
+    >
+      <TableCell className="font-medium justify-center">{area.id}</TableCell>
       <TableCell>{area.name}</TableCell>
       <TableCell>{area.students.length}</TableCell>
-      <TableCell>{area.routes.length}</TableCell>
-      <TableCell>3</TableCell>
-      <TableCell className="text-right">5</TableCell>
+      <TableCell>{area.stops.length}</TableCell>
+      <TableCell className="text-right">xxxx</TableCell>
     </TableRow>
   )
 }

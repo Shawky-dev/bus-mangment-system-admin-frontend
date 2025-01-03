@@ -24,12 +24,19 @@ export default function MainArea({}: Props) {
           className={`text-lg ${selected === 1 ? 'underline' : ''}`}
           onClick={() => setSelected(1)}
         >
-          Buses/Drivers
+          TimeSlots/Routes
         </Button>
         <Button
           variant="link"
           className={`text-lg ${selected === 2 ? 'underline' : ''}`}
           onClick={() => setSelected(2)}
+        >
+          Buses/Drivers
+        </Button>
+        <Button
+          variant="link"
+          className={`text-lg ${selected === 3 ? 'underline' : ''}`}
+          onClick={() => setSelected(3)}
         >
           Students/Parents
         </Button>
@@ -40,8 +47,9 @@ export default function MainArea({}: Props) {
             <AreasSection />
           </div>
         )}
-        {selected === 1 && <div>Content for Buses</div>}
-        {selected === 2 && (
+        {selected === 1 && <div>Content for TimeSlots/Routes</div>}
+        {selected === 2 && <div>Content for Buses</div>}
+        {selected === 3 && (
           <div className="p-5">
             <StudentSection />
           </div>

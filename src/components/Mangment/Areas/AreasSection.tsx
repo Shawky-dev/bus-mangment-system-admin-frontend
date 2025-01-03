@@ -29,24 +29,34 @@ type Props = {}
 
 export default function AreasSection({}: Props) {
   const [areas, setAreas] = useState<Array<Area>>([])
-  const [selectedArea, setSelectedArea] = useState<number>(0)
+  const [selectedAreaId, setSelectedAreaId] = useState<number>(0)
+  const [selectedArea, setSelectedArea] = useState<Area | null>(null)
   useEffect(() => {
     const getAllAreas = async () => {
       try {
-        const response = await axiosInstance.get('/dev/admin/area')
-        setAreas(response.data)
+        const response = await axiosInstance.get('/area/getAllAreas')
         console.log(response.data)
+        setAreas(response.data.areas)
       } catch (error) {
         console.log('Err getting area\n' + error)
       }
     }
     getAllAreas()
   }, [])
+  const handleAreaClick = (id: number) => {
+    setSelectedAreaId(id)
+    setSelectedArea(areas.find((area) => area.id === id) || null)
+  }
+
   return (
     <div className="flex flex-col p-4 overflow-y-scroll">
       <div className="flex flex-row justify-between space-x-2">
-        <AreasList areas={areas} />
-        <AreaDisplay />
+        <AreasList
+          areas={areas}
+          handleAreaClick={handleAreaClick}
+          selectedArea={selectedArea}
+        />
+        <AreaDisplay selectedArea={selectedArea} />
       </div>
     </div>
   )

@@ -28,11 +28,18 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import AreaEdit from './AreaEdit'
+import AreaCreate from './AreaCreate'
 type Props = {
   areas: Array<Area>
+  handleAreaClick: (id: number) => void
+  selectedArea: Area | null
 }
 
-export default function AreasList({ areas }: Props) {
+export default function AreasList({
+  areas,
+  handleAreaClick,
+  selectedArea,
+}: Props) {
   return (
     <Card className="p-2 grow">
       <Table>
@@ -44,24 +51,27 @@ export default function AreasList({ areas }: Props) {
                 Add Area
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
-              <AreaEdit />
+            <DialogContent>
+              <AreaCreate />
             </DialogContent>
           </Dialog>
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Area Location</TableHead>
+            <TableHead className="w-[100px]">id</TableHead>
             <TableHead>Area Name</TableHead>
             <TableHead>No. of Students</TableHead>
-            <TableHead>No. of Routes</TableHead>
-            <TableHead>No. of DroppOffPickUps</TableHead>
-            <TableHead className="text-right">No. of Spots</TableHead>
+            <TableHead>No. of Stops</TableHead>
+            <TableHead className="text-right">No. of Buses</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {areas.map((area) => (
-            <AreaListRow area={area} />
+            <AreaListRow
+              area={area}
+              key={area.id}
+              handleAreaClick={handleAreaClick}
+            />
           ))}
         </TableBody>
       </Table>

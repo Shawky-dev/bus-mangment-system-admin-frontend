@@ -10,7 +10,8 @@ export default function LandingPage() {
     const checkAuth = async () => {
       try {
         const response = await axiosInstance.get('/auth/check')
-        const { role } = response.data
+        const { role } = response.data.user
+        console.log(response)
         if (role === 'ADMIN') {
           navigate('/dashboard')
         } else {

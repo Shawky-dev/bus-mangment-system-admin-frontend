@@ -9,6 +9,7 @@ export default function Signup() {
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     if (password !== confirmPassword) {
@@ -26,6 +27,7 @@ export default function Signup() {
       navigate('/dashboard')
     } catch (error) {
       console.error('Signup failed', error)
+      setError('Signup failed: ' + error.response.data.message)
     }
 
     console.log('Signing up with', email, password)
@@ -76,6 +78,7 @@ export default function Signup() {
             <label className="block text-sm font-medium text-gray-700">
               Confirm Password:
             </label>
+            {error && <p className="text-red-500">{error}</p>}
             <Input
               type="password"
               value={confirmPassword}

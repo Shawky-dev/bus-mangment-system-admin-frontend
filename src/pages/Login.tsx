@@ -8,6 +8,7 @@ export default function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -20,6 +21,7 @@ export default function Login() {
       navigate('/dashboard')
     } catch (error) {
       console.error('Login failed', error)
+      setError('Invalid email or password')
     }
 
     console.log('Logging in with', email, password)
@@ -55,6 +57,7 @@ export default function Login() {
             />
           </div>
           <div>
+            {error && <p className="text-red-500">{error}</p>}
             <Button
               type="submit"
               className="w-full px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300"

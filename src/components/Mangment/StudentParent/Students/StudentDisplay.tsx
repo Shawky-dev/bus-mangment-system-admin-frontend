@@ -19,14 +19,24 @@ import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
 import React from 'react'
 import { MdOutlineEdit } from 'react-icons/md'
 import StudentEdit from './StudentEdit'
+import { Student } from 'public/types'
+import { getValueOrDefault } from '../../Areas/AreaDisplay'
 
-type Props = {}
+type Props = {
+  selectedStudent: Student | null
+}
 
-export default function StudentDisplay({}: Props) {
+export default function StudentDisplay({ selectedStudent }: Props) {
+  if (!selectedStudent)
+    return (
+      <Card className="w-3/6 flex justify-center items-center">
+        <p className="">No Student selected</p>
+      </Card>
+    )
   return (
-    <Card className="w-2/6">
+    <Card className="w-3/6">
       <CardHeader className="pb-2 items-center">
-        <CardTitle className=" text-center">Student</CardTitle>
+        <CardTitle className=" text-center">{selectedStudent.name}</CardTitle>
         <img src="https://placehold.co/50x50/png" className="h-52 w-52" />
       </CardHeader>
       <CardDescription className="flex flex-row-reverse pl-6 pr-6 justify-between items-center">
@@ -43,31 +53,50 @@ export default function StudentDisplay({}: Props) {
         <Table>
           <TableBody>
             <TableRow>
+              <TableCell className="font-medium">Id :</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.id)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell className="font-medium">Name :</TableCell>
-              <TableCell className="text-right"></TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.name)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Area</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.areaId)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Stop</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.stopId)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Route</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.routeId)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Parent Email</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.parentId)}
+              </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Student Email</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedStudent.email)}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   )
 }

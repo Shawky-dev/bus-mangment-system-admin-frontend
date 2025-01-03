@@ -33,6 +33,9 @@ import { getValueOrDefault } from './AreaDisplay'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 import { CgRemove } from 'react-icons/cg'
 import { CiCirclePlus } from 'react-icons/ci'
+import { StudentSelectPopover } from './StudentSelectPopover'
+import { StopAddPopover } from './StopAddPopover'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 type Props = {
   area: Area
 }
@@ -76,6 +79,17 @@ export default function AreaEdit({ area }: Props) {
             studentId: studentId,
           },
         }
+      )
+      console.log(response)
+      navigate(0)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  const handleDeleteStop = async (stopId: number) => {
+    try {
+      const response = await axiosInstance.delete(
+        `/area/deleteStopFromArea?areaId=${area.id}&stopId=${stopId}`
       )
       console.log(response)
       navigate(0)
@@ -144,7 +158,7 @@ export default function AreaEdit({ area }: Props) {
           </TableHeader>
           <TableBody>
             {area.students.map((student) => (
-              <TableRow>
+              <TableRow key={student.id}>
                 <TableCell className="font-medium">
                   {getValueOrDefault(student.id)}
                 </TableCell>
@@ -154,7 +168,7 @@ export default function AreaEdit({ area }: Props) {
                 <TableCell className="text-right">
                   {getValueOrDefault(student.stopId)}
                 </TableCell>
-                <TableCell>
+                <TableCell className="text-right">
                   <Button
                     onClick={() => handleRemoveStudent(student.id)}
                     className="bg-white w-10 h-10 hover:bg-red-200"
@@ -168,73 +182,14 @@ export default function AreaEdit({ area }: Props) {
         </Table>
         <div className="flex items-center space-x-4">
           <p className="text-sm text-muted-foreground">Add Student to Area</p>
-          <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className="w-[150px] justify-start">
-                {selectedStudent ? (
-                  <>{selectedStudent.name}</>
-                ) : (
-                  <>+ Set Student</>
-                )}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="p-0" side="right" align="start">
-              <Command>
-                <CommandInput placeholder="Change status..." />
-                <CommandList>
-                  <CommandEmpty>No results found.</CommandEmpty>
-                  <CommandGroup>
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[100px]">
-                            Student Id
-                          </TableHead>
-                          <TableHead>Student Name</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {Students.map((student) => (
-                          <TableRow key={student.id}>
-                            <TableCell>
-                              <CommandItem
-                                value={student.id.toString()}
-                                onSelect={(id) => {
-                                  setSelectedStudent(
-                                    Students.find(
-                                      (student) => student.id === Number(id)
-                                    ) || null
-                                  )
-                                  setOpen(false)
-                                }}
-                              >
-                                {student.id}
-                              </CommandItem>
-                            </TableCell>
-                            <TableCell>
-                              <CommandItem
-                                value={student.id.toString()}
-                                onSelect={(id) => {
-                                  setSelectedStudent(
-                                    Students.find(
-                                      (student) => student.id === Number(id)
-                                    ) || null
-                                  )
-                                  setOpen(false)
-                                }}
-                              >
-                                {student.name}
-                              </CommandItem>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </CommandGroup>
-                </CommandList>
-              </Command>
-            </PopoverContent>
-          </Popover>
+          <StudentSelectPopover
+            open={open}
+            onOpenChange={setOpen}
+            selectedStudent={selectedStudent}
+            setSelectedStudent={setSelectedStudent}
+            students={Students}
+            areaId={area.id}
+          />
           <Button
             className="bg-white w-10 h-10 hover:bg-green-200"
             onClick={handleAddStudent}
@@ -243,6 +198,38 @@ export default function AreaEdit({ area }: Props) {
           </Button>
         </div>
         {err2 && <p className="text-red-500">{err2}</p>}
+      </div>
+      <div>
+        <h1>Stop List:</h1>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Stop Id</TableHead>
+              <TableHead>Stop Name</TableHead>
+              <TableHead>Priority</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {area.stops.map((stop) => (
+              <TableRow key={stop.id}>
+                <TableCell className="font-medium">
+                  {getValueOrDefault(stop.id)}
+                </TableCell>
+                <TableCell>{getValueOrDefault(stop.name)}</TableCell>
+                <TableCell>{getValueOrDefault(stop.priority)}</TableCell>
+                <TableCell className="text-right">
+                  <Button
+                    onClick={() => handleDeleteStop(stop.id)}
+                    className="bg-white w-10 h-10 hover:bg-red-200"
+                  >
+                    <RiDeleteBin6Line className="text-red-800 text-[20px]" />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <StopAddPopover areaId={area.id} />
       </div>
     </div>
   )

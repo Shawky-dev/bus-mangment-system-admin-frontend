@@ -13,6 +13,7 @@ import { IoAddCircleOutline } from 'react-icons/io5'
 import AreaEdit from '../../Areas/AreaEdit'
 import { Parent } from 'public/types'
 import ParentListRow from './ParentListRow'
+import ParentCreate from './ParentCreate'
 
 type Props = {
   parents: Array<Parent>
@@ -30,8 +31,8 @@ export default function ParentList({ parents }: Props) {
                 Add Parent
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
-              <AreaEdit />
+            <DialogContent>
+              <ParentCreate />
             </DialogContent>
           </Dialog>
         </TableCaption>

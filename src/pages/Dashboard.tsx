@@ -18,29 +18,27 @@ import {
 import { IoIosArrowDown } from 'react-icons/io'
 import { FaBars } from 'react-icons/fa'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { CiLogout, CiSettings } from 'react-icons/ci'
 import { CgProfile } from 'react-icons/cg'
 import NavBar from '@/components/NavBar'
 import MainArea from '@/components/MainArea'
+import { useNavigate } from 'react-router-dom'
 
 export default function Dashboard() {
-  // const handledemoSecure = async () => {
-  //   try {
-  //     const response = await axiosInstance.get('/demo')
-  //     console.log('demo ', response.data)
-  //   } catch (error) {
-  //     console.error('Login failed', error)
-  //   }
-  // }
-  // const handledemoAdminSecure = async () => {
-  //   try {
-  //     const response = await axiosInstance.get('/admin/hi')
-  //     console.log('admin demo ', response.data)
-  //   } catch (error) {
-  //     console.error('Login failed', error)
-  //   }
-  // }
+  const navigate = useNavigate()
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axiosInstance.get('/auth/check')
+        console.log(response.data.status)
+      } catch (e) {
+        console.log(e)
+        navigate('/')
+      }
+    }
+    checkAuth()
+  }, [])
 
   return (
     <div className="flex flex-row justify-between h-svh">

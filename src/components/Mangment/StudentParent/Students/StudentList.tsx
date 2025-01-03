@@ -15,12 +15,14 @@ import { IoAddCircleOutline } from 'react-icons/io5'
 import AreaEdit from '../../Areas/AreaEdit'
 import { Student } from 'public/types'
 import StudentListRow from './StudentListRow'
+import StudentCreate from './StudentCreate'
 
 type Props = {
   students: Array<Student>
+  handleStudentClick: (id: number) => void
 }
 
-export default function StudentList({ students }: Props) {
+export default function StudentList({ students, handleStudentClick }: Props) {
   return (
     <Card className="p-2 grow">
       <Table>
@@ -32,8 +34,8 @@ export default function StudentList({ students }: Props) {
                 Add Student
               </Button>
             </DialogTrigger>
-            <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
-              <AreaEdit />
+            <DialogContent>
+              <StudentCreate />
             </DialogContent>
           </Dialog>
         </TableCaption>
@@ -49,7 +51,11 @@ export default function StudentList({ students }: Props) {
         </TableHeader>
         <TableBody>
           {students.map((student) => (
-            <StudentListRow student={student} />
+            <StudentListRow
+              student={student}
+              key={student.id}
+              handleStudentClick={handleStudentClick}
+            />
           ))}
         </TableBody>
       </Table>

@@ -10,16 +10,14 @@ type Props = {}
 
 export default function StudentSection({}: Props) {
   const [students, setStudents] = useState<Array<Student>>([])
-  const [selectedStudent, setSelectedStudent] = useState<number>(0)
   const [parents, setParents] = useState<Array<Parent>>([])
-  const [selectParent, setSelectedParent] = useState<number>(0)
+  const [selectedParent, setSelectedParent] = useState<Parent | null>(null)
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
   useEffect(() => {
     const getAllStudents = async () => {
       try {
-        const response = await axiosInstance.get(
-          'http://localhost:8080/dev/user/getAllUsers?type=STUDENT'
-        )
-        setStudents(response.data.users)
+        const response = await axiosInstance.get('/user/student/getAllStudents')
+        setStudents(response.data.students)
         console.log(response.data)
       } catch (error) {
         console.log('Err getting students\n' + error)
@@ -27,10 +25,8 @@ export default function StudentSection({}: Props) {
     }
     const getAllParents = async () => {
       try {
-        const response = await axiosInstance.get(
-          'http://localhost:8080/dev/user/getAllUsers?type=PARENT'
-        )
-        setParents(response.data.users)
+        const response = await axiosInstance.get('/user/student/getallParents')
+        setParents(response.data.parents)
         console.log(response.data)
       } catch (error) {
         console.log('Err getting parents\n' + error)
@@ -39,11 +35,21 @@ export default function StudentSection({}: Props) {
     getAllParents()
     getAllStudents()
   }, [])
+  const handleStudentClick = (id: number) => {
+    setSelectedStudent(students.find((student) => student.id === id) || null)
+  }
+  const handleParentClick = (id: number) => {
+    setSelectedParent(parents.find((parent) => parent.id === id) || null)
+  }
+
   return (
     <div className="flex flex-col p-4 overflow-y-scroll space-y-5">
       <div className="flex flex-row justify-between space-x-2">
-        <StudentList students={students} />
-        <StudentDisplay />
+        <StudentList
+          students={students}
+          handleStudentClick={handleStudentClick}
+        />
+        <StudentDisplay selectedStudent={selectedStudent} />
       </div>
       <div className="flex flex-row justify-between space-x-2">
         <ParentList parents={parents} />

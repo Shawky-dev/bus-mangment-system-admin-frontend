@@ -6,20 +6,38 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card'
-import { Table, TableBody, TableRow, TableCell } from '@/components/ui/table'
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  TableCaption,
+} from '@/components/ui/table'
 import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
 import React from 'react'
 import { MdOutlineEdit } from 'react-icons/md'
-import StudentEdit from '../Students/StudentEdit'
 import ParentEdit from './ParentEdit'
+import { Parent } from 'public/types'
+import { getValueOrDefault } from '../../Areas/AreaDisplay'
 
-type Props = {}
+type Props = {
+  selectedParent: Parent | null
+}
 
-export default function ParentDisplay({}: Props) {
+export default function ParentDisplay({ selectedParent }: Props) {
+  if (!selectedParent)
+    return (
+      <Card className="w-3/6 flex justify-center items-center">
+        <p className="">No Parent selected</p>
+      </Card>
+    )
+
   return (
-    <Card className="w-2/6">
+    <Card className="w-3/6">
       <CardHeader className="pb-2 items-center">
-        <CardTitle className=" text-center">Selected Parent</CardTitle>
+        <CardTitle className=" text-center">{selectedParent.name}</CardTitle>
         <img src="https://placehold.co/50x50/png" className="h-52 w-52" />
       </CardHeader>
       <CardDescription className="flex flex-row-reverse pl-6 pr-6 justify-between items-center">
@@ -28,7 +46,7 @@ export default function ParentDisplay({}: Props) {
             <MdOutlineEdit className="text-[30px] hover:cursor-pointer hover:bg-gray-100 rounded-lg" />
           </DialogTrigger>
           <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
-            <ParentEdit />
+            <ParentEdit parent={selectedParent} />
           </DialogContent>
         </Dialog>
       </CardDescription>
@@ -36,31 +54,32 @@ export default function ParentDisplay({}: Props) {
         <Table>
           <TableBody>
             <TableRow>
+              <TableCell className="font-medium">Id :</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedParent.id)}
+              </TableCell>
+            </TableRow>
+            <TableRow>
               <TableCell className="font-medium">Name :</TableCell>
-              <TableCell className="text-right"></TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedParent.name)}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-medium">Area</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="font-medium">Email :</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedParent.email)}
+              </TableCell>
             </TableRow>
             <TableRow>
-              <TableCell className="font-medium">Stop</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Parent Email</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Student Email</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              <TableCell className="font-medium">Student :</TableCell>
+              <TableCell className="text-right">
+                {getValueOrDefault(selectedParent.studentId)}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
     </Card>
   )
 }

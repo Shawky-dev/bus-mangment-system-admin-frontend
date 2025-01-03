@@ -13,6 +13,7 @@ export default function StudentSection({}: Props) {
   const [parents, setParents] = useState<Array<Parent>>([])
   const [selectedParent, setSelectedParent] = useState<Parent | null>(null)
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
+
   useEffect(() => {
     const getAllStudents = async () => {
       try {
@@ -25,7 +26,7 @@ export default function StudentSection({}: Props) {
     }
     const getAllParents = async () => {
       try {
-        const response = await axiosInstance.get('/user/student/getallParents')
+        const response = await axiosInstance.get('/user/parent/getAllParents')
         setParents(response.data.parents)
         console.log(response.data)
       } catch (error) {
@@ -35,9 +36,11 @@ export default function StudentSection({}: Props) {
     getAllParents()
     getAllStudents()
   }, [])
+
   const handleStudentClick = (id: number) => {
     setSelectedStudent(students.find((student) => student.id === id) || null)
   }
+
   const handleParentClick = (id: number) => {
     setSelectedParent(parents.find((parent) => parent.id === id) || null)
   }
@@ -52,8 +55,8 @@ export default function StudentSection({}: Props) {
         <StudentDisplay selectedStudent={selectedStudent} />
       </div>
       <div className="flex flex-row justify-between space-x-2">
-        <ParentList parents={parents} />
-        <ParentDisplay />
+        <ParentList parents={parents} handleParentClick={handleParentClick} />
+        <ParentDisplay selectedParent={selectedParent} />
       </div>
     </div>
   )

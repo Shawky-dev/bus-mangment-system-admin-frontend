@@ -3,23 +3,25 @@ import { Card } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import {
   Table,
+  TableBody,
   TableCaption,
+  TableCell,
+  TableHead,
   TableHeader,
   TableRow,
-  TableHead,
-  TableBody,
 } from '@/components/ui/table'
+import React from 'react'
 import { IoAddCircleOutline } from 'react-icons/io5'
-import AreaEdit from '../../Areas/AreaEdit'
 import { Parent } from 'public/types'
 import ParentListRow from './ParentListRow'
 import ParentCreate from './ParentCreate'
 
 type Props = {
   parents: Array<Parent>
+  handleParentClick: (id: number) => void
 }
 
-export default function ParentList({ parents }: Props) {
+export default function ParentList({ parents, handleParentClick }: Props) {
   return (
     <Card className="p-2 grow">
       <Table>
@@ -41,12 +43,16 @@ export default function ParentList({ parents }: Props) {
             <TableHead className="w-[100px]">Parent Pic</TableHead>
             <TableHead>Parent Name</TableHead>
             <TableHead>Parent Email</TableHead>
-            <TableHead className="text-right">Student</TableHead>
+            <TableHead>Student</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {parents.map((parent) => (
-            <ParentListRow parent={parent} />
+            <ParentListRow
+              parent={parent}
+              key={parent.id}
+              handleParentClick={handleParentClick}
+            />
           ))}
         </TableBody>
       </Table>

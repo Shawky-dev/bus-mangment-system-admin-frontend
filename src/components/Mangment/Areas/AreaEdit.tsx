@@ -32,6 +32,7 @@ import axiosInstance from '@/axiosConfig'
 import { getValueOrDefault } from './AreaDisplay'
 import { IoIosRemoveCircleOutline } from 'react-icons/io'
 import { CgRemove } from 'react-icons/cg'
+import { CiCirclePlus } from 'react-icons/ci'
 type Props = {
   area: Area
 }
@@ -40,6 +41,7 @@ export default function AreaEdit({ area }: Props) {
   const [open, setOpen] = React.useState(false)
   const [areaName, setAreaName] = useState(area.name)
   const [error, setError] = useState('')
+  const [err2, setErr2] = useState('')
   const [Students, setStudents] = useState<Array<Student>>([])
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null)
   const navigate = useNavigate()
@@ -75,6 +77,24 @@ export default function AreaEdit({ area }: Props) {
           },
         }
       )
+      console.log(response)
+      navigate(0)
+    } catch (e) {
+      console.error(e)
+    }
+  }
+  const handleAddStudent = async () => {
+    if (!selectedStudent) {
+      setErr2('Please select a student')
+      return
+    }
+    try {
+      const response = await axiosInstance.put('/area/addStudentToArea', null, {
+        params: {
+          areaId: area.id,
+          studentId: selectedStudent.id,
+        },
+      })
       console.log(response)
       navigate(0)
     } catch (e) {
@@ -147,7 +167,7 @@ export default function AreaEdit({ area }: Props) {
           </TableBody>
         </Table>
         <div className="flex items-center space-x-4">
-          <p className="text-sm text-muted-foreground">Status</p>
+          <p className="text-sm text-muted-foreground">Add Student to Area</p>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-[150px] justify-start">
@@ -164,28 +184,65 @@ export default function AreaEdit({ area }: Props) {
                 <CommandList>
                   <CommandEmpty>No results found.</CommandEmpty>
                   <CommandGroup>
-                    {Students.map((student) => (
-                      <CommandItem
-                        key={student.id}
-                        value={student.id.toString()}
-                        onSelect={(id) => {
-                          setSelectedStudent(
-                            Students.find(
-                              (student) => student.id === Number(id)
-                            ) || null
-                          )
-                          setOpen(false)
-                        }}
-                      >
-                        {student.id}:{student.name}
-                      </CommandItem>
-                    ))}
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-[100px]">
+                            Student Id
+                          </TableHead>
+                          <TableHead>Student Name</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {Students.map((student) => (
+                          <TableRow key={student.id}>
+                            <TableCell>
+                              <CommandItem
+                                value={student.id.toString()}
+                                onSelect={(id) => {
+                                  setSelectedStudent(
+                                    Students.find(
+                                      (student) => student.id === Number(id)
+                                    ) || null
+                                  )
+                                  setOpen(false)
+                                }}
+                              >
+                                {student.id}
+                              </CommandItem>
+                            </TableCell>
+                            <TableCell>
+                              <CommandItem
+                                value={student.id.toString()}
+                                onSelect={(id) => {
+                                  setSelectedStudent(
+                                    Students.find(
+                                      (student) => student.id === Number(id)
+                                    ) || null
+                                  )
+                                  setOpen(false)
+                                }}
+                              >
+                                {student.name}
+                              </CommandItem>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CommandGroup>
                 </CommandList>
               </Command>
             </PopoverContent>
           </Popover>
+          <Button
+            className="bg-white w-10 h-10 hover:bg-green-200"
+            onClick={handleAddStudent}
+          >
+            <CiCirclePlus className="text-green-700" />
+          </Button>
         </div>
+        {err2 && <p className="text-red-500">{err2}</p>}
       </div>
     </div>
   )

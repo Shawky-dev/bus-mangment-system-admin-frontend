@@ -45,19 +45,19 @@ export default function StudentCreate({}: Props) {
           type="text"
           id="email"
           onChange={(e) => setEmail(e.target.value)}
-          value={name}
+          value={email}
         />
       </div>
       <Label>Student Password:</Label>
       <div className="flex flex-row items-center space-x-4">
         <Input
           type="text"
-          id="email"
+          id="password"
           onChange={(e) => setPassword(e.target.value)}
-          value={name}
+          value={password}
         />
       </div>
-      <Button onClick={handleCreateStudent}>Create Area</Button>
+      <Button onClick={handleCreateStudent}>Create Student</Button>
       {error && <p className="text-red-500">{error}</p>}
     </div>
   )

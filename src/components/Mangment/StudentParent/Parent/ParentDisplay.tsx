@@ -11,6 +11,7 @@ import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
 import React from 'react'
 import { MdOutlineEdit } from 'react-icons/md'
 import StudentEdit from '../Students/StudentEdit'
+import ParentEdit from './ParentEdit'
 
 type Props = {}
 
@@ -27,7 +28,7 @@ export default function ParentDisplay({}: Props) {
             <MdOutlineEdit className="text-[30px] hover:cursor-pointer hover:bg-gray-100 rounded-lg" />
           </DialogTrigger>
           <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
-            <StudentEdit />
+            <ParentEdit />
           </DialogContent>
         </Dialog>
       </CardDescription>

@@ -5,6 +5,7 @@ import {
   CardTitle,
   CardContent,
   CardFooter,
+  CardDescription,
 } from '@/components/ui/card'
 import { Route } from 'public/types'
 import {
@@ -17,12 +18,19 @@ import {
 } from '@/components/ui/table'
 import { getValueOrDefault } from '../../Areas/AreaDisplay'
 import { Separator } from '@/components/ui/separator'
+import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog'
+import { MdOutlineEdit } from 'react-icons/md'
+import RouteEdit from './RouteEdit'
+import { Button } from '@/components/ui/button'
+import axiosInstance from '@/axiosConfig'
+import { useNavigate } from 'react-router-dom'
 
 type Props = {
   selectedRoute: Route | null
 }
 
 export default function RouteDisplay({ selectedRoute }: Props) {
+  const navigate = useNavigate()
   if (!selectedRoute) {
     return (
       <Card className="w-3/6 flex justify-center items-center">
@@ -30,12 +38,36 @@ export default function RouteDisplay({ selectedRoute }: Props) {
       </Card>
     )
   }
+  const handleStartRoute = async () => {
+    try {
+      const response = await axiosInstance.post(
+        `route/startRoute/${selectedRoute.id}`
+      )
+      console.log('Route started', response.data)
+      navigate(0)
+    } catch (error) {
+      console.error('Error starting route', error)
+    }
+  }
 
   return (
     <Card className="w-3/6">
       <CardHeader>
         <CardTitle className="text-center">Route {selectedRoute.id}</CardTitle>
+        <Button className="bg-green-400 text-black" onClick={handleStartRoute}>
+          Start bus
+        </Button>
       </CardHeader>
+      <CardDescription className="flex flex-row-reverse pl-6 pr-6 justify-between items-center">
+        <Dialog>
+          <DialogTrigger>
+            <MdOutlineEdit className="text-[30px] hover:cursor-pointer hover:bg-gray-100 rounded-lg" />
+          </DialogTrigger>
+          <DialogContent className="h-[calc(100dvh-50px)] overflow-y-scroll max-w-4xl">
+            <RouteEdit route={selectedRoute} />
+          </DialogContent>
+        </Dialog>
+      </CardDescription>
       <CardContent>
         <Table>
           <TableBody>
@@ -72,13 +104,13 @@ export default function RouteDisplay({ selectedRoute }: Props) {
             <TableRow>
               <TableCell className="font-medium">Driver :</TableCell>
               <TableCell className="text-right">
-                {getValueOrDefault(selectedRoute.areaId)}
+                {getValueOrDefault(selectedRoute.driverId)}
               </TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Bus :</TableCell>
               <TableCell className="text-right">
-                {getValueOrDefault(selectedRoute.areaId)}
+                {getValueOrDefault(selectedRoute.busId)}
               </TableCell>
             </TableRow>
           </TableBody>

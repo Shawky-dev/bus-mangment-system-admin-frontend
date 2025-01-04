@@ -15,6 +15,8 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { IoAddCircleOutline } from 'react-icons/io5'
 import AreaCreate from '../../Areas/AreaCreate'
+import { Route } from 'react-router-dom'
+import RouteCreate from './RouteCreate'
 
 type Props = {
   routes: Route[]
@@ -39,7 +41,7 @@ export default function RoutesList({
               </Button>
             </DialogTrigger>
             <DialogContent>
-              <AreaCreate />
+              <RouteCreate />
             </DialogContent>
           </Dialog>
         </TableCaption>

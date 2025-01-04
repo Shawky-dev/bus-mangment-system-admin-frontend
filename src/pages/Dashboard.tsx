@@ -24,6 +24,7 @@ import { CgProfile } from 'react-icons/cg'
 import NavBar from '@/components/NavBar'
 import MainArea from '@/components/MainArea'
 import { useNavigate } from 'react-router-dom'
+import SideBar from '@/components/SideBar'
 
 export default function Dashboard() {
   const navigate = useNavigate()
@@ -42,12 +43,9 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-row justify-between h-svh">
-      <div className="bg-gray-100 w-2/12 p-3 flex flex-col border-gray-200 border-r-[1px]">
-        <div className="flex items-center space-x-2"></div>
-      </div>
+      <SideBar />
       <div className="bg-gray-300 grow overflow-hidden">
         {/*  */}
-        <NavBar />
         <MainArea />
       </div>
     </div>

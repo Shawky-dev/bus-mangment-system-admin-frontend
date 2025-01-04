@@ -12,9 +12,13 @@ import { CgProfile } from 'react-icons/cg'
 import { CiSettings, CiLogout } from 'react-icons/ci'
 import axiosInstance from '@/axiosConfig'
 import { useNavigate } from 'react-router-dom'
+import { Button } from './ui/button'
 
-type Props = {}
-export default function SideBar({}: Props) {
+type Props = {
+  selected: number
+  setSelected: (selected: number) => void
+}
+export default function SideBar({ selected, setSelected }: Props) {
   const navigate = useNavigate()
   const handleLogout = async () => {
     try {
@@ -26,24 +30,41 @@ export default function SideBar({}: Props) {
   }
   return (
     <div className="bg-gray-100 w-1/12 p-3 flex flex-col border-gray-200 border-r-[1px]">
-      <div className="flex items-center space-x-2">
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex flex-row space-x-1 items-center outline-none focus:outline-none">
-            <Avatar className="drop-shadow-sm">
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-gray-100">
-            <DropdownMenuItem
-              className="text-red-500 focus:text-red-500"
-              onClick={handleLogout}
-            >
-              <CiLogout />
-              LogOut
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+      <div className="flex flex-col items-center space-y-5">
+        <Button
+          className="text-red-500 focus:text-red-500 text-xl"
+          onClick={handleLogout}
+          variant="ghost"
+        >
+          <CiLogout style={{ height: '1.3em', width: '1.3em' }} />
+        </Button>
+        <Button
+          variant="outline"
+          className={`text-sm ${
+            selected === 0 ? 'bg-gray-500 text-white hover:bg-gray-500' : ''
+          }`}
+          onClick={() => setSelected(0)}
+        >
+          Managment
+        </Button>
+        <Button
+          variant="outline"
+          className={`text-sm ${
+            selected === 1 ? 'bg-gray-500 text-white hover:bg-gray-500' : ''
+          }`}
+          onClick={() => setSelected(1)}
+        >
+          Active Routes
+        </Button>
+        <Button
+          variant="outline"
+          className={`text-sm ${
+            selected === 2 ? 'bg-gray-500 text-white hover:bg-gray-500' : ''
+          }`}
+          onClick={() => setSelected(2)}
+        >
+          Logged Routes
+        </Button>
       </div>
     </div>
   )

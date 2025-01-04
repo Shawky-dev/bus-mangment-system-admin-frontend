@@ -7,7 +7,7 @@ import TimeSlotRouteSection from './Mangment/TimeSlotRoutes/TimeSlotRouteSection
 
 type Props = {}
 
-export default function MainArea({}: Props) {
+export default function Management({}: Props) {
   const [selected, setSelected] = useState(0)
 
   return (

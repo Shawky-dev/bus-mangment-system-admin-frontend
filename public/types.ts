@@ -41,6 +41,7 @@ export type Route = {
   areaId: number
   students: Array<Student>
   stops: Array<Stop>
+  stopPosition: number
 }
 
 export type TimeSlot = {

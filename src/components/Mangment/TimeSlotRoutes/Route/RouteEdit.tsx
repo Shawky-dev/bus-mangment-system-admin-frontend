@@ -67,6 +67,7 @@ export default function RouteEdit({ route }: Props) {
 
     fetchData()
   }, [])
+
   const handleRemoveStudent = async (studentId: number) => {
     setSelectedStudents(
       selectedStudents.filter((student) => student.id !== studentId)
@@ -97,6 +98,11 @@ export default function RouteEdit({ route }: Props) {
       console.log(error)
     }
   }
+
+  // Filter students by area_id
+  const filteredStudents = students.filter(
+    (student) => student.areaId === route.areaId
+  )
 
   return (
     <div className="flex flex-col space-y-4">
@@ -203,7 +209,7 @@ export default function RouteEdit({ route }: Props) {
               <CommandList>
                 <CommandEmpty>No results found.</CommandEmpty>
                 <CommandGroup>
-                  {students
+                  {filteredStudents
                     .filter(
                       (student) =>
                         !selectedStudents.find((s) => s.id === student.id)

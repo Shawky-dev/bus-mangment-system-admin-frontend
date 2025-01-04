@@ -68,9 +68,13 @@ export default function StudentEdit({ student }: Props) {
   const handleSelectAreaStopRoute = async () => {
     try {
       const response = await axiosInstance.put(
-        `http://localhost:8080/user/student/selectAreaStopRoute?studentId=${student.id}&areaId=${selectedArea?.id}&stopId=${selectedStop?.id}&routeId=${selectedRoute?.id}`
+        `http://localhost:8080/user/student/selectAreaStop?studentId=${student.id}&areaId=${selectedArea?.id}&stopId=${selectedStop?.id}`
+      )
+      const response2 = await axiosInstance.post(
+        `http://localhost:8080/route/addStudentToRoute/${selectedRoute?.id}/${student.id}`
       )
       console.log(response)
+      console.log(response2)
       navigate(0)
     } catch (e) {
       console.log(e)

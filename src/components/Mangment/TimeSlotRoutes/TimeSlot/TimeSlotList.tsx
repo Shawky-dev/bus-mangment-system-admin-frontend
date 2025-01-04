@@ -11,12 +11,17 @@ import {
 } from '@/components/ui/table'
 import React from 'react'
 import { IoAddCircleOutline } from 'react-icons/io5'
+import TimeSlotCreate from './TimeSlotCreate'
+import { TimeSlot } from 'public/types'
+import TimeSlotListRow from './TimeSlotListRow'
 
-type Props = {}
+type Props = {
+  timeSlots: Array<TimeSlot>
+}
 
-export default function TimeSlotList({}: Props) {
+export default function TimeSlotList({ timeSlots }: Props) {
   return (
-    <Card className="p-2 grow">
+    <Card className="p-2 w-2/12">
       <Table>
         <TableCaption>
           <Dialog>
@@ -26,20 +31,22 @@ export default function TimeSlotList({}: Props) {
                 Add Time Slot
               </Button>
             </DialogTrigger>
-            <DialogContent></DialogContent>
+            <DialogContent>
+              <TimeSlotCreate />
+            </DialogContent>
           </Dialog>
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Time Slot</TableHead>
-            <TableHead>Time Slot Name</TableHead>
-            <TableHead>Time Slot Email</TableHead>
-            <TableHead>Parent</TableHead>
-            <TableHead>Area</TableHead>
-            <TableHead className="text-right">Stop</TableHead>
+            <TableHead className="w-[100px]">Time Slot ID</TableHead>
+            <TableHead>Time Slot Date</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody></TableBody>
+        <TableBody>
+          {timeSlots.map((timeSlot) => (
+            <TimeSlotListRow key={timeSlot.id} timeSlot={timeSlot} />
+          ))}
+        </TableBody>
       </Table>
     </Card>
   )

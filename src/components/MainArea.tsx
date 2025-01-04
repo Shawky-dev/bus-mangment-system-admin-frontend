@@ -3,8 +3,7 @@ import { Button } from './ui/button'
 import AreasSection from './Mangment/Areas/AreasSection'
 import { Card } from './ui/card'
 import StudentSection from './Mangment/StudentParent/StudentParentSection'
-import TimeSlotRouteSection from './Mangment/TimeSlot/TimeSlotSection'
-import TimeSlotSection from './Mangment/TimeSlot/TimeSlotSection'
+import TimeSlotRouteSection from './Mangment/TimeSlotRoutes/TimeSlotRouteSection'
 
 type Props = {}
 
@@ -49,7 +48,7 @@ export default function MainArea({}: Props) {
             <AreasSection />
           </div>
         )}
-        {selected === 1 && <TimeSlotSection />}
+        {selected === 1 && <TimeSlotRouteSection />}
         {selected === 2 && <div>Content for Buses</div>}
         {selected === 3 && (
           <div className="p-5">

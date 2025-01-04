@@ -51,7 +51,6 @@ export default function AreaDisplay({ selectedArea }: Props) {
     <Card className="w-3/6">
       <CardHeader className="pb-2">
         <CardTitle className=" text-center">{selectedArea.name}</CardTitle>
-        <img src="https://placehold.co/200x100/png" />
       </CardHeader>
       <CardDescription className="flex flex-row-reverse pl-6 pr-6 justify-between items-center">
         <Dialog>

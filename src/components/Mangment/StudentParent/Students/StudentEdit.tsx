@@ -65,16 +65,25 @@ export default function StudentEdit({ student }: Props) {
       setError('Failed to edit student. Please try again.')
     }
   }
-  const handleSelectAreaStopRoute = async () => {
+  const handleSelectRoute = async () => {
+    try {
+      const response2 = await axiosInstance.post(
+        `http://localhost:8080/route/addStudentToRoute/${selectedRoute?.id}/${student.id}`
+      )
+      console.log(response2)
+      navigate(0)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleSelectAreaStop = async () => {
     try {
       const response = await axiosInstance.put(
         `http://localhost:8080/user/student/selectAreaStop?studentId=${student.id}&areaId=${selectedArea?.id}&stopId=${selectedStop?.id}`
       )
-      const response2 = await axiosInstance.post(
-        `http://localhost:8080/route/addStudentToRoute/${selectedRoute?.id}/${student.id}`
-      )
+
       console.log(response)
-      console.log(response2)
       navigate(0)
     } catch (e) {
       console.log(e)
@@ -129,61 +138,66 @@ export default function StudentEdit({ student }: Props) {
           <div className="flex justify-center items-center">
             <h1>Select Student Area</h1>
           </div>
-          <div className="flex flex-row space-x-4 items-center mt-7">
-            <Label>Select Area:</Label>
-            <AreaSelectPopover
-              open={isAreaPopoverOpen}
-              onOpenChange={setIsAreaPopoverOpen}
-              selectedArea={selectedArea}
-              setSelectedArea={setSelectedArea}
-              areas={areas}
-            />
-            {}
-            {selectedArea && (
-              <>
-                <Label>
-                  Select Stop from{' '}
-                  <span className=" italic font-semibold text-base">
-                    {selectedArea.name}
-                  </span>
-                  :
-                </Label>
-                <StopSelectPopover
-                  open={isStopPopoverOpen}
-                  onOpenChange={setIsStopPopoverOpen}
-                  selectedStop={selectedStop}
-                  setSelectedStop={setSelectedStop}
-                  stops={selectedArea?.stops || []}
-                />
-                <Label>
-                  Select Route From{' '}
-                  <span className=" italic font-semibold text-base">
-                    {selectedArea.name}
-                  </span>
-                  :
-                </Label>
-                <RouteSelectPopover
-                  open={isRoutePopoverOpen}
-                  onOpenChange={setIsRoutePopoverOpen}
-                  selectedRoute={selectedRoute}
-                  setSelectedRoute={setSelectedRoute}
-                  routes={
-                    selectedArea?.routes.filter(
-                      (route) => route.status === 'PENDING'
-                    ) || []
-                  }
-                />
-                <div>
+          <div className="flex flex-col space-y-5">
+            <div className="flex flex-row space-x-4 items-center mt-7">
+              <Label>Select Area:</Label>
+              <AreaSelectPopover
+                open={isAreaPopoverOpen}
+                onOpenChange={setIsAreaPopoverOpen}
+                selectedArea={selectedArea}
+                setSelectedArea={setSelectedArea}
+                areas={areas}
+              />
+              {}
+              {selectedArea && (
+                <>
+                  <Label>
+                    Select Stop from{' '}
+                    <span className=" italic font-semibold text-base">
+                      {selectedArea.name}
+                    </span>
+                    :
+                  </Label>
+                  <StopSelectPopover
+                    open={isStopPopoverOpen}
+                    onOpenChange={setIsStopPopoverOpen}
+                    selectedStop={selectedStop}
+                    setSelectedStop={setSelectedStop}
+                    stops={selectedArea?.stops || []}
+                  />
                   <Button
-                    onClick={handleSelectAreaStopRoute}
+                    onClick={handleSelectAreaStop}
                     className="w-40 place-self-center"
                   >
-                    Edit Student Details
+                    Select Area/Stop
                   </Button>
-                  {error && <p className="text-red-500">{error}</p>}
-                </div>
-              </>
-            )}
+                </>
+              )}
+            </div>
+            <div className="flex flex-row mt-5 space-x-4 items-center">
+              <Label>Select Route: </Label>
+              <RouteSelectPopover
+                open={isRoutePopoverOpen}
+                onOpenChange={setIsRoutePopoverOpen}
+                selectedRoute={selectedRoute}
+                setSelectedRoute={setSelectedRoute}
+                routes={
+                  selectedArea?.routes.filter(
+                    (route) =>
+                      route.status === 'PENDING' && route.id != student.routeId
+                  ) || []
+                }
+              />
+              <div>
+                <Button
+                  onClick={handleSelectRoute}
+                  className="w-40 place-self-center"
+                >
+                  Edit Route
+                </Button>
+                {error && <p className="text-red-500">{error}</p>}
+              </div>
+            </div>
           </div>
         </div>
       </div>

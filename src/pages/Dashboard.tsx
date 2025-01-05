@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom'
 import SideBar from '@/components/SideBar'
 import Management from '@/components/Management'
 import ActiveRoutes from '@/components/ActiveRoutes'
+import LoggedRoutes from '@/components/LoggedRoutes'
 
 export default function Dashboard() {
   const [selected, setSelected] = React.useState(0)
@@ -51,7 +52,7 @@ export default function Dashboard() {
         {/*  */}
         {selected === 0 && <MainArea />}
         {selected === 1 && <ActiveRoutes />}
-        {selected === 2 && <div>Logged Routes</div>}
+        {selected === 2 && <LoggedRoutes />}
       </div>
     </div>
   )

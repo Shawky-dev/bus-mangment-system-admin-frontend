@@ -92,12 +92,14 @@ export default function ActiveRoutesDisplay({ selectedRoute }: Props) {
         <CardTitle className="text-center">
           <div>Route {selectedRoute.id}</div>
         </CardTitle>
-        <Button
-          className="bg-green-400 text-black"
-          onClick={handleCompleteRoute}
-        >
-          Complete Route
-        </Button>
+        {selectedRoute.status === 'PENDING' && (
+          <Button
+            className="bg-green-400 text-black"
+            onClick={handleCompleteRoute}
+          >
+            Complete Route
+          </Button>
+        )}
         {error && <p className="text-red-500">{error}</p>}
       </CardHeader>
       <Separator orientation="horizontal" className="bg-orange-900" />

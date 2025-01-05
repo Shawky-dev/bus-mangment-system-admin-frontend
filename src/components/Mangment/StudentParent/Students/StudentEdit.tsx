@@ -167,7 +167,11 @@ export default function StudentEdit({ student }: Props) {
                   onOpenChange={setIsRoutePopoverOpen}
                   selectedRoute={selectedRoute}
                   setSelectedRoute={setSelectedRoute}
-                  routes={selectedArea?.routes || []}
+                  routes={
+                    selectedArea?.routes.filter(
+                      (route) => route.status === 'PENDING'
+                    ) || []
+                  }
                 />
                 <div>
                   <Button

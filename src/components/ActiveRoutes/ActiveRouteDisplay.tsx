@@ -92,7 +92,7 @@ export default function ActiveRoutesDisplay({ selectedRoute }: Props) {
         <CardTitle className="text-center">
           <div>Route {selectedRoute.id}</div>
         </CardTitle>
-        {selectedRoute.status === 'PENDING' && (
+        {selectedRoute.status === 'IN_PROGRESS' && (
           <Button
             className="bg-green-400 text-black"
             onClick={handleCompleteRoute}
